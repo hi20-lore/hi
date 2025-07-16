@@ -128,15 +128,9 @@
     const countdownElement = document.getElementById("timer");
 
     // Set countdown to 2d 19h (67 hours)
-    let targetTime = localStorage.getItem("countdownTarget");
+   // Set a fixed target time for everyone (e.g., July 18, 2025 at 20:00 local time)
+const targetTime = new Date("2025-07-18T20:00:00").getTime();
 
-    if (!targetTime) {
-      const now = new Date().getTime();
-      targetTime = now + (67 * 60 * 60 * 1000); // 67 hours
-      localStorage.setItem("countdownTarget", targetTime);
-    } else {
-      targetTime = parseInt(targetTime);
-    }
 
     function updateCountdown() {
       const now = new Date().getTime();
