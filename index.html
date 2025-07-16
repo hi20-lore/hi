@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3-Day Countdown</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ascii-art {
+      position: absolute;
+      color: #ffffff1a;
+      font-size: 20px;
+      white-space: pre;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* Chicken positions */
+    .chicken1 { top: 5%; left: 5%; }
+    .chicken2 { top: 25%; right: 10%; }
+    .chicken3 { bottom: 15%; left: 15%; }
+    .chicken4 { top: 60%; right: 20%; }
+    .chicken5 { bottom: 5%; left: 40%; }
+
+    /* Fish positions */
+    .fish1 { top: 10%; left: 60%; }
+    .fish2 { top: 40%; left: 70%; }
+    .fish3 { bottom: 30%; right: 30%; }
+    .fish4 { bottom: 10%; left: 10%; }
+    .fish5 { top: 70%; right: 5%; }
+
+    .countdown {
+      z-index: 1;
+      text-align: center;
+      font-size: 3rem;
+    }
+
+    .label {
+      font-size: 1rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Chickens -->
+  <pre class="ascii-art chicken1">
+  ,~.
+ (o o) 
+ / V \ 
+/( _ )\\
+ ^^ ^^
+  </pre>
+
+  <pre class="ascii-art chicken2">
+   __
+ <(o )___
+  ( ._>  )
+   `----'
+  </pre>
+
+  <pre class="ascii-art chicken3">
+  ,~.
+ (o o) 
+ / V \ 
+/( _ )\\
+ ^^ ^^
+  </pre>
+
+  <pre class="ascii-art chicken4">
+   __
+ <(o )___
+  ( ._>  )
+   `----'
+  </pre>
+
+  <pre class="ascii-art chicken5">
+  ,~.
+ (o o) 
+ / V \ 
+/( _ )\\
+ ^^ ^^
+  </pre>
+
+  <!-- Fish -->
+  <pre class="ascii-art fish1">
+><(((º>
+  </pre>
+
+  <pre class="ascii-art fish2">
+><(((*>
+  </pre>
+
+  <pre class="ascii-art fish3">
+><>   ><> 
+  </pre>
+
+  <pre class="ascii-art fish4">
+><(((º>
+  </pre>
+
+  <pre class="ascii-art fish5">
+<°)))><
+  </pre>
+
+  <!-- Countdown content -->
+  <div class="countdown">
+    <div id="timer">Loading...</div>
+    <div class="label">Time remaining</div>
+  </div>
+  <script>
+  const countdownElement = document.getElementById("timer");
+
+  // Get or set the fixed target time
+  let targetTime = localStorage.getItem("countdownTarget");
+
+  if (!targetTime) {
+    // Set countdown to 2 days and 22 hours from now (in ms)
+    const now = new Date().getTime();
+    targetTime = now + (67 * 60 * 60 * 1000);
+   
+  } else {
+    targetTime = parseInt(targetTime);
+  }
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = targetTime - now;
+
+    if (distance <= 0) {
+      countdownElement.innerHTML = "00:00:00:00";
+      clearInterval(interval);
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdownElement.innerHTML =
+      `${String(days).padStart(2, '0')}:` +
+      `${String(hours).padStart(2, '0')}:` +
+      `${String(minutes).padStart(2, '0')}:` +
+      `${String(seconds).padStart(2, '0')}`;
+  }
+
+  const interval = setInterval(updateCountdown, 1000);
+  updateCountdown(); // Initial call
+</script>
+
+</body>
+</html>
